@@ -7,7 +7,7 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import React from "react";
-import { MdContentCopy } from "react-icons/md";
+import { MdContentCopy, MdOutlineKeyboardAlt } from "react-icons/md";
 import "@fontsource/noto-sans-cham";
 import "@fontsource/noto-sans-tagalog";
 import "@fontsource/noto-sans-buhid";
@@ -29,6 +29,8 @@ import "@fontsource/noto-sans-rejang";
 import "@fontsource/noto-sans-javanese";
 import "@fontsource/noto-sans-sundanese";
 import "@fontsource/noto-sans-balinese";
+
+import "@fontsource/scheherazade-new"
 import { getFont } from "src/utils/objects";
 
 export const TransliterateInput = ({
@@ -41,6 +43,9 @@ export const TransliterateInput = ({
   variant,
   isLatinInput,
   standardLatin,
+  inputElementRef,
+  hasKeyboard,
+  handleShowKeyboard,
   ...props
 }) => {
   const fontFamily = getFont(script, variant);
@@ -58,6 +63,7 @@ export const TransliterateInput = ({
               resize="none"
               borderWidth={0}
               height="100%"
+              ref={inputElementRef}
               focusBorderColor="transparent"
               // make scrollbar translucent
               sx={{
@@ -79,6 +85,13 @@ export const TransliterateInput = ({
               {...props}
             />
             <HStack justify="space-between">
+              {!isLatinInput && hasKeyboard
+              ? <IconButton
+                onClick={handleShowKeyboard}
+                variant="ghost"
+                icon={<MdOutlineKeyboardAlt />}
+              />
+              : null}
               <Text fontSize="sm" textColor="gray.300">
                 {""}
               </Text>
@@ -101,6 +114,7 @@ export const TransliterateInput = ({
               resize="none"
               borderWidth={0}
               height="100%"
+              ref={inputElementRef}
               focusBorderColor="transparent"
               // make scrollbar translucent
               sx={{
